@@ -31,15 +31,21 @@ def home():
 def about():
     return render_template('www.intellipaat.com')
 
+#ADD EMPLOYEE DONE
+@app.route("/addemp/",methods=['GET','POST'])
+def addEmp():
+    return render_template("hire_emp.html",date=datetime.now())
 
-@app.route("/addemp", methods=['POST'])
-def AddEmp():
+#EMPLOYEE OUTPUT
+@app.route("/addemp/results", methods=['GET', 'POST'])
+def Emp():
     emp_id = request.form['emp_id']
     first_name = request.form['first_name']
     last_name = request.form['last_name']
     pri_skill = request.form['pri_skill']
     location = request.form['location']
     emp_image_file = request.files['emp_image_file']
+    check_in =''
 
     insert_sql = "INSERT INTO employee VALUES (%s, %s, %s, %s, %s)"
     cursor = db_conn.cursor()
@@ -81,6 +87,122 @@ def AddEmp():
     print("all modification done...")
     return render_template('AddEmpOutput.html', name=emp_name)
 
+#Attendance 
+@app.route("/attendance/")
+def attendance():
+    return render_template("Attendance.html",date=datetime.now())
 
+@app.route("/attendance/checkIn",methods=['GET','POST'])
+def checkIn():
+    emp_id = request.form['emp_id']
+
+    #UPDATE STATEMENT
+    update_stmt= "UPDATE employee SET check_in =(%(check_in)s) WHERE emp_id = %(emp_id)s"
+
+    cursor = db_conn.cursor()
+
+    LoginTime = datetime.now()
+    formatted_login = LoginTime.strftime('%Y-%m-%d %H:%M:%S')
+    print ("Check in time:{}",formatted_login)
+
+    try:
+        cursor.execute(update_stmt, { 'check_in': formatted_login ,'emp_id':int(emp_id)})
+        db_conn.commit()
+        print(" Data Updated into MySQL")
+
+    except Exception as e:
+        return str(e)
+
+    finally:
+        cursor.close()
+        
+    return render_template("AttendanceOutput.html",date=datetime.now(),
+    LoginTime=formatted_login)
+
+#CHECK OUT BUTTON
+@app.route("/attendance/output",methods=['GET','POST'])
+def checkOut():
+
+    emp_id = request.form['emp_id']
+    # SELECT STATEMENT TO GET DATA FROM MYSQL
+    select_stmt = "SELECT check_in FROM employee WHERE emp_id = %(emp_id)s"
+    insert_statement="INSERT INTO attendance VALUES (%s,%s,%s,%s)"
+    
+
+    cursor = db_conn.cursor()
+        
+    try:
+        cursor.execute(select_stmt,{'emp_id':int(emp_id)})
+        LoginTime= cursor.fetchall()
+       
+        for row in LoginTime:
+            formatted_login = row
+            print(formatted_login[0])
+        
+
+        CheckoutTime=datetime.now()
+        LogininDate = datetime.strptime(formatted_login[0],'%Y-%m-%d %H:%M:%S')
+        
+
+      
+        formatted_checkout = CheckoutTime.strftime('%Y-%m-%d %H:%M:%S')
+        Total_Working_Hours = CheckoutTime - LogininDate
+        print(Total_Working_Hours)
+
+         
+        try:
+            cursor.execute(insert_statement,(emp_id,formatted_login[0],formatted_checkout,Total_Working_Hours))
+            db_conn.commit()
+            print(" Data Inserted into MySQL")
+            
+            
+        except Exception as e:
+             return str(e)
+                    
+                    
+    except Exception as e:
+        return str(e)
+
+    finally:
+        cursor.close()
+        
+    return render_template("AttendanceOutput.html",date=datetime.now(),Checkout = formatted_checkout,
+     LoginTime=formatted_login[0],TotalWorkingHours=Total_Working_Hours)
+#Get Employee DONE
+@app.route("/getemp/")
+def getEmp():
+    
+    return render_template('GetEmp.html',date=datetime.now())
+
+
+#Get Employee Results
+@app.route("/getemp/results",methods=['GET','POST'])
+def Employee():
+    
+     #Get Employee
+     emp_id = request.form['emp_id']
+    # SELECT STATEMENT TO GET DATA FROM MYSQL
+     select_stmt = "SELECT * FROM employee WHERE emp_id = %(emp_id)s"
+
+     
+     cursor = db_conn.cursor()
+        
+     try:
+         cursor.execute(select_stmt, { 'emp_id': int(emp_id) })
+         # #FETCH ONLY ONE ROWS OUTPUT
+         for result in cursor:
+            print(result)
+        
+
+     except Exception as e:
+        return str(e)
+        
+     finally:
+        cursor.close()
+    
+
+     return render_template("GetEmpOutput.html",result=result,date=datetime.now())
+
+# RMB TO CHANGE PORT NUMBER
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
