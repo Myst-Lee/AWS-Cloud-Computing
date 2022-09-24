@@ -9,21 +9,21 @@
    <body>
     <header style="opacity:0.95;">
       <div class="topnav">
-         <a class="active" href="Home.html">Home</a>
-         <a href="attendance.html">Attendance</a>
-         <a href="hire_emp.html">Hire Employee</a>
-         <a href="fire_emp.html">Fire Employees</a>
-         <a href="emp_det.html">Employee Details</a>
+         <a class="active" href="/">Home</a>
+         <a href="/attendance/">Attendance</a>
+         <a href="/addemp/">Hire Employee</a>
+         <a href="/delemp/">Fire Employees</a>
+         <a href="/getemp/">Employee Details</a>
        </div>
     </header>
        
-       <div id = "container">
+       <div id = "container" style = "height: 500pt">
          <h1 style="color: black; text-align: center; font-size: 40px; font-weight: bold;">Employee Database</h1>
          
 	 <div>
 		 <h2 style="margin-left: 16%;"> Date and Time is <span id="time"></span>{{ date.strftime("%A, %d %B, %Y at %X") }}</h2>
 <!-- 		 {{ date.strftime("%A, %d %B, %Y at %X") }} -->
-		 <script src = time.js></script>
+<!-- 		 <script src = time.js></script> -->
 	 </div>
          
 	 
@@ -31,22 +31,15 @@
           
           <form action="/" autocomplete="on" method = "POST" enctype="multipart/form-data">
 
-	    <a href="attendance.html"><button class="button1">Attendance</button></a>
-            <a href="hire_emp.html"><button class="button1">Hire Employee</button></a>
-            <a href="fire_emp.html"><button class="button1">Fire Employee</button></a>
-            <a href="emp_det.html"><button class="button1">Employee Detail</button></a>
+	    <a href="/attendance/"><button class="button1">Attendance</button></a>
+            <a href="/addemp/"><button class="button1">Hire Employee</button></a>
+            <a href="/delemp/"><button class="button1">Fire Employee</button></a>
+            <a href="/getemp/"><button class="button1">Employee Detail</button></a>
 
 			</form>            
       </div>
    </body>
 </html>
-
-<!-- a login in page with navigation panel at center?
- .navbar { 
-    position: fixed;
-    top: 0;
-    width: 100%;
-}
 
 
 
