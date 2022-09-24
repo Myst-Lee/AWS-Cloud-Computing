@@ -85,12 +85,12 @@ def Emp():
         cursor.close()
 
     print("all modification done...")
-    return render_template('AddEmpOutput.html', name=emp_name)
+    return render_template('hire_emp_out.html', name=emp_name)
 
 #Attendance 
 @app.route("/attendance/")
 def attendance():
-    return render_template("Attendance.html",date=datetime.now())
+    return render_template("attendance.html",date=datetime.now())
 
 @app.route("/attendance/checkIn",methods=['GET','POST'])
 def checkIn():
@@ -116,7 +116,7 @@ def checkIn():
     finally:
         cursor.close()
         
-    return render_template("AttendanceOutput.html",date=datetime.now(),
+    return render_template("attendance_out.html",date=datetime.now(),
     LoginTime=formatted_login)
 
 #CHECK OUT BUTTON
@@ -166,13 +166,14 @@ def checkOut():
     finally:
         cursor.close()
         
-    return render_template("AttendanceOutput.html",date=datetime.now(),Checkout = formatted_checkout,
+    return render_template("attendance_out.html",date=datetime.now(),Checkout = formatted_checkout,
      LoginTime=formatted_login[0],TotalWorkingHours=Total_Working_Hours)
+
 #Get Employee DONE
 @app.route("/getemp/")
 def getEmp():
     
-    return render_template('GetEmp.html',date=datetime.now())
+    return render_template('emp_det.html',date=datetime.now())
 
 
 #Get Employee Results
@@ -201,7 +202,7 @@ def Employee():
         cursor.close()
     
 
-     return render_template("GetEmpOutput.html",result=result,date=datetime.now())
+     return render_template("emp_det_out.html",result=result,date=datetime.now())
 
 # RMB TO CHANGE PORT NUMBER
 if __name__ == '__main__':
