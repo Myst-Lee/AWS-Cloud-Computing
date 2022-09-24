@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head style="opacity: 0.1;">
+        <link rel="stylesheet" href="{{ url_for('static', filename='web.css')}}" />
+        <title>CC Assignment</title>
+   </head>
+
+   
+   <body>
+    <header style="opacity:0.95;">
+      <div class="topnav">
+         <a class="active" href="Home.html">Home</a>
+         <a href="attendance.html">Attendance</a>
+         <a href="hire_emp.html">Hire Employee</a>
+         <a href="fire_emp.html">Fire Employees</a>
+         <a href="emp_det.html">Employee Details</a>
+       </div>
+    </header>
+       
+       <div id = "container">
+         <h1 style="color: black; text-align: center; font-size: 40px; font-weight: bold;">Employee Database</h1>
+         
+	 <div>
+		 <h2 style="margin-left: 16%;"> Date and Time is <span id="time"></span></h2>
+		 {{ date.strftime("%A, %d %B, %Y at %X") }}
+		 #<script src = time.js></script>
+	 </div>
+         
+	 
+	 
+          
+          <form action="/" autocomplete="on" method = "POST" enctype="multipart/form-data">
+
+	    <a href="attendance.html"><button class="button1">Attendance</button></a>
+            <a href="hire_emp.html"><button class="button1">Hire Employee</button></a>
+            <a href="fire_emp.html"><button class="button1">Fire Employee</button></a>
+            <a href="emp_det.html"><button class="button1">Employee Detail</button></a>
+
+			</form>            
+      </div>
+   </body>
+</html>
+
+<!-- a login in page with navigation panel at center?
+ .navbar { 
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
