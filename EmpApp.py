@@ -219,7 +219,7 @@ def delEmployee():
      emp_id = request.form['emp_id']
     # SELECT STATEMENT TO GET DATA FROM MYSQL
      select_stmt = "SELECT * FROM employee WHERE emp_id = %(emp_id)s"
-     elete_stmt = "DELETE FROM employee WHERE emp_id = %(emp_id)s"
+     delete_stmt = "DELETE FROM employee WHERE emp_id = %(emp_id)s"
      cursor = db_conn.cursor()
      cursor1 = db_conn.cursor()
         
