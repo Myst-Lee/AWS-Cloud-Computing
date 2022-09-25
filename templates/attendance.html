@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head style="opacity: 0.1;">
+      <link href="{{ url_for('static', filename='web.css')}}" rel="stylesheet" />
+        <title>CC Assignment</title>
+   </head>
+
+   
+   <body>
+    <header style="opacity:0.95;">
+        <div class="topnav">
+         <a href="/">Home</a>
+         <a class="active" href="/attendance/">Attendance</a>
+         <a href="/addemp/">Hire Employee</a>
+         <a href="/delemp/">Fire Employees</a>
+         <a href="/getemp/">Employee Details</a>
+
+            
+    </header>
+       
+       <div id = "container">
+         <h1 style="color: black; text-align: center; font-size: 40px;">Attendance</h1>
+            <label for="username">Employee ID:</label>
+            <input type="text" id="username" name="username">
+            <br>
+            <button type="submit" class="buttonBack" formaction="/attendance/checkIn" style="margin-top: 10%; margin-left: 10%;">Check In</button>
+            <a href="/attendance/output"><button type="submit" class="buttonBack" style="margin-top: 10%; margin-left: 10%;">Check Out</button></a>
+            <!--/ lower-->
+         </form>
+      </div>
+   </body>
+</html>
+
+<!-- a login in page with navigation panel at center?
+ .navbar { 
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
