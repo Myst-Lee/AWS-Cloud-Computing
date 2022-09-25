@@ -204,6 +204,44 @@ def Employee():
 
      return render_template("emp_det_out.html",result=result,date=datetime.now())
 
+#Get Employee DONE
+@app.route("/delemp/")
+def delEmp():
+    
+    return render_template('fire_emp.html',date=datetime.now())
+
+
+#Get Employee Results
+@app.route("/delemp/results",methods=['GET','POST'])
+def delEmployee():
+    
+     #Get Employee
+     emp_id = request.form['emp_id']
+    # SELECT STATEMENT TO GET DATA FROM MYSQL
+     select_stmt = "SELECT * FROM employee WHERE emp_id = %(emp_id)s"
+     elete_stmt = "DELETE FROM employee WHERE emp_id = %(emp_id)s"
+     cursor = db_conn.cursor()
+     cursor1 = db_conn.cursor()
+        
+     try:
+         cursor.execute(select_stmt, { 'emp_id': int(emp_id) })
+         cursor1.execute(delete_stmt, {'emp_id': int(emp_id)})
+         # #FETCH ONLY ONE ROWS OUTPUT
+         for result in cursor:
+            print(result)
+        
+
+     except Exception as e:
+        db_conn.rollback()
+        return str(e)
+        
+     finally:
+        cursor.close()
+        cursor1.close()
+    
+
+     return render_template("fire_emp.html",result=result,date=datetime.now())
+    
 # RMB TO CHANGE PORT NUMBER
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
