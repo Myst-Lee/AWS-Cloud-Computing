@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head style="opacity: 0.1;">
+      <link href="{{ url_for('static', filename='web.css')}}" rel="stylesheet" />
+      <title>CC Assignment</title>
+   </head>
+
+   
+   <body>
+    <header style="opacity:0.95;">
+        <div class="topnav">
+         <a href="/">Home</a>
+         <a href="/attendance/">Attendance</a>
+         <a class="active" href="/addemp/">Hire Employee</a>
+         <a href="/delemp/">Fire Employees</a>
+         <a href="/getemp/">Employee Details</a>
+
+            
+    </header>
+       <div id = "container" style="height: 400pt;">
+         <body style="background-color: lightgrey; text-align: center;">
+
+            <form>
+
+               <div>
+   
+                     <label style="font-size: 15pt; margin-right: 10%; font-weight: bold;">Employee ID:</label>
+                     <label style="font-size: 15pt; margin-left: 10%; font-weight: bold;">First Name:</label><br>
+                     <label style="font-size: 15pt; margin-right: 10%;margin-left: 10%; font-weight: bold; margin-top: 1%;">{{ result[0] }}</label> 
+                     <label style="font-size: 15pt; margin-left: 15%;margin-right: 5%; font-weight: bold; margin-top: 1%;">{{ result[1] }}</label> 
+                     <br><br>
+   
+                     <label style="font-size: 15pt; margin-right: 10%; font-weight: bold;">Last Name:</label>
+                     <label style="font-size: 15pt; margin-left: 10%; font-weight: bold;">Primary Interest:</label><br>
+                     <label style="font-size: 15pt; margin-right: 10%;margin-left: 10%; font-weight: bold; margin-top: 1%;">{{ result[2] }}</label> 
+                     <label style="font-size: 15pt; margin-left: 15%;margin-right: 5%; font-weight: bold; margin-top: 1%;">{{ result[3] }}</label> 
+                     <br><br>
+
+                     <label style="font-size: 15pt; margin-right: 10%; font-weight: bold;">Location:</label>
+                     <label style="font-size: 15pt; margin-left: 10%; font-weight: bold;">Image Url:</label><br>
+                     <label style="font-size: 15pt; margin-right: 10%;margin-left: 10%; font-weight: bold; margin-top: 1%;">{{ result[4] }}</label> 
+                     <label style="font-size: 15pt; margin-left: 15%;margin-right: 5%; font-weight: bold; margin-top: 1%;">{{ result[5] }}</label> 
+                     <br><br>
+   
+                     <a href="/">
+                        <button type="submit" class="buttonBack" style="margin-top: 3%;"formaction="http://3.134.115.108:80/getemp">BACK</button><br><br>
+                     </a>
+                    
+   
+                 </div>
+   
+            </form>
+
+            <!-- <label for="empID" style="font-size: 15pt; margin-right: 10%; font-weight: bold;">Employee ID:</label>
+            <label for="empID" style="font-size: 15pt; margin-left: 10%; font-weight: bold;">First Name:</label><br>
+            <label for="empID" style="font-size: 15pt; margin-right: 10%;">{{ name }}</label>
+            <label for="empID" style="font-size: 15pt; margin-left: 14%;">{{ fname }}</label><br>
+            <label for="dept" style="font-size: 15pt; margin-right: 10%; margin-left: 10%;font-weight: bold;">Last Name:&ensp;&ensp;&ensp;</label>
+            <label for="empID" style="font-size: 15pt; margin-left: 10%; font-weight: bold; margin-right: 1%">Department:&ensp;&ensp;&ensp;</label><br>
+            <label for="empID" style="font-size: 15pt; margin-right: 10%; margin-left: 10%">{{ lname }}</label>
+            <label for="empID" style="font-size: 15pt; margin-left: 15%; margin-right: 5%">{{ dept }}</label><br>
+            <label for="dept" style="font-size: 15pt; margin-right: 10%;font-weight: bold;  margin-left: 10%">Location:&ensp;&ensp;&ensp;</label>
+            <label for="empID" style="font-size: 15pt; margin-left: 10%; font-weight: bold;margin-right: 1%">Primary Skills:&ensp;&ensp;&ensp;</label><br>
+            <label for="empID" style="font-size: 15pt; margin-right: 10%; margin-left: 10%">{{ loc }}</label>
+            <label for="empID" style="font-size: 15pt; margin-left: 15%; margin-right: 5%">{{ skills }}</label><br>
+            <a href="Home.html"><button class="buttonBack" style="margin-top: 20pt; margin-left: 8%; ">BACK</button></a> -->
+         </body>
+
+         
+      </div>
+   </body>
+</html>
+
+<!-- a login in page with navigation panel at center?
+ .navbar { 
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
