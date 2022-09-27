@@ -228,17 +228,18 @@ def delEmp():
 @app.route("/delemp/results",methods=['GET','POST'])
 def delEmployee():
     
+    
      #Get Employee
-     emp_id = request.form['emp_id']
+    emp_id = request.form['emp_id']
     # SELECT STATEMENT TO GET DATA FROM MYSQL
-     select_stmt = "SELECT * FROM employee WHERE emp_id LIKE %s"
-     cursor = db_conn.cursor()
-     cursor.execute(select_stmt, (emp_id))
-     result = cursor.fetchone()
+    select_stmt = "SELECT * FROM employee WHERE emp_id LIKE %s"
+    cursor = db_conn.cursor()
+    cursor.execute(select_stmt, (emp_id))
+    result = cursor.fetchone()
     
     if(len(result)>0):
         nameUser = result[1]+" "+result[2]
-        
+         
         emp_image_file_name_in_s3 = "emp-id-" + str(emp_id) + "_image_file"
         s3 = boto3.resource('s3')
         try: 
@@ -257,7 +258,7 @@ def delEmployee():
     else:
         cursor.close()
         return("No User Found")
-    
+        
 # RMB TO CHANGE PORT NUMBER
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
