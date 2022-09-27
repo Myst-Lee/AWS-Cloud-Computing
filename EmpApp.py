@@ -191,7 +191,7 @@ def Employee():
     select_stmt = "SELECT * FROM employee WHERE emp_id = %(emp_id)s"
 
     cursor = db_conn.cursor()
-    cursor.execute(selectSQL, (emp_id))
+    cursor.execute(select_stmt, (emp_id))
     result = cursor.fetchall()
     
     if(len(result)>0):
