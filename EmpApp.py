@@ -202,7 +202,7 @@ def Employee():
         cursor.close()
     
 
-     return render_template("emp_det_out.html",result=result,date=datetime.now())
+     return render_template('emp_det_out.html',result=result,date=datetime.now())
 
 #Get Employee DONE
 @app.route("/delemp/")
@@ -240,7 +240,7 @@ def delEmployee():
         cursor1.close()
     
 
-     return render_template("fire_emp.html",result=result,date=datetime.now())
+     return render_template('fire_emp.html',result=result,date=datetime.now())
     
 # RMB TO CHANGE PORT NUMBER
 if __name__ == '__main__':
