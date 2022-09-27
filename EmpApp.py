@@ -180,67 +180,83 @@ def getEmp():
 @app.route("/getemp/results",methods=['GET','POST'])
 def Employee():
     
-     #Get Employee
+     s3 = boto3.resource('s3')
+    # Get Employee
      emp_id = request.form['emp_id']
+     emp_name = ""
+     emp_loc = ""
+     emp_pri_skill = ""
+     emp_img = ""
     # SELECT STATEMENT TO GET DATA FROM MYSQL
      select_stmt = "SELECT * FROM employee WHERE emp_id = %(emp_id)s"
 
-     
      cursor = db_conn.cursor()
-        
-     try:
-         cursor.execute(select_stmt, { 'emp_id': emp_id })
-         # #FETCH ONLY ONE ROWS OUTPUT
-         for result in cursor:
-            print(result)
-        
-
-     except Exception as e:
-        return str(e)
-        
-     finally:
-        cursor.close()
+     cursor.execute(selectSQL, (emp_id))
+     result = cursor.fetchall()
     
+     if(len(result)>0):
+        for i in result:
+            emp_image_file_name_in_s3 = "emp-id-" + str(emp_id) + "_image_file"
+            emp_fname = i[1]
+            emp_lname = i[2]
+            emp_loc = i[4]
+            emp_pri_skill = i[3]
+            bucket_location = boto3.client('s3').get_bucket_location(Bucket=custombucket)
+            s3_location = (bucket_location['LocationConstraint'])
+            if s3_location is None:
+                s3_location = ''
+            else:
+                s3_location = '-' + s3_location
+            object_url = "https://s3{0}.amazonaws.com/{1}/{2}".format(
+                s3_location,
+                custombucket,
+                emp_image_file_name_in_s3)
+            cursor.close()
+            return render_template('emp_det_out.html', emp_id_output=emp_id, fname=emp_fname, lname=emp_lname, emp_loc_output=emp_loc, emp_pri_skill_output=emp_pri_skill, emp_img=object_url)
+      else:
+        cursor.close()
+        return("No User Found")
 
-     return render_template('emp_det_out.html',result=result,date=datetime.now())
-
-#Get Employee DONE
+#Delete Employee
 @app.route("/delemp/")
 def delEmp():
     
-    return render_template('fire_emp.html',date=datetime.now())
+    return render_template('fire_emp.html')
 
 
-#Get Employee Results
+#Delete Employee Results
 @app.route("/delemp/results",methods=['GET','POST'])
 def delEmployee():
     
      #Get Employee
      emp_id = request.form['emp_id']
     # SELECT STATEMENT TO GET DATA FROM MYSQL
-     select_stmt = "SELECT * FROM employee WHERE emp_id LIKE %(emp_id)s"
-     delete_stmt = "DELETE FROM employee WHERE emp_id LIKE %(emp_id)s"
+     select_stmt = "SELECT * FROM employee WHERE emp_id LIKE %s"
      cursor = db_conn.cursor()
-     cursor1 = db_conn.cursor()
-        
-     try:
-         cursor.execute(select_stmt, { 'emp_id': emp_id })
-         cursor1.execute(delete_stmt, {'emp_id': emp_id})
-         # #FETCH ONLY ONE ROWS OUTPUT
-         for result in cursor:
-            print(result)
-        
-
-     except Exception as e:
-        db_conn.rollback()
-        return str(e)
-        
-     finally:
-        cursor.close()
-        cursor1.close()
+     cursor.execute(select_stmt, (emp_id))
+     result = cursor.fetchone()
     
-
-     return render_template('fire_emp.html',result=result,date=datetime.now())
+    if(len(result)>0):
+        nameUser = result[1]+" "+result[2]
+        
+        emp_image_file_name_in_s3 = "emp-id-" + str(emp_id) + "_image_file"
+        s3 = boto3.resource('s3')
+        try: 
+            selectSQL = "DELETE FROM employee WHERE emp_id = %s"
+            cursor.execute(selectSQL, (emp_id))
+            db_conn.commit()
+            print("Data deleted from MySQL RDS... deleting image from S3...")
+            boto3.client('s3').delete_object(Bucket=custombucket, Key=emp_image_file_name_in_s3)
+        except Exception as e:
+            return str(e)
+        finally:
+            cursor.close()
+            
+        print("all modification done...")
+        return render_template('fire_emp.html', name=nameUser)
+    else:
+        cursor.close()
+        return("No User Found")
     
 # RMB TO CHANGE PORT NUMBER
 if __name__ == '__main__':
