@@ -188,7 +188,7 @@ def Employee():
     emp_pri_skill = ""
     emp_img = ""
     # SELECT STATEMENT TO GET DATA FROM MYSQL
-    select_stmt = "SELECT * FROM employee WHERE emp_id = %(emp_id)s"
+    select_stmt = "SELECT * FROM employee WHERE emp_id = %s"
 
     cursor = db_conn.cursor()
     cursor.execute(select_stmt, (emp_id))
