@@ -180,21 +180,21 @@ def getEmp():
 @app.route("/getemp/results",methods=['GET','POST'])
 def Employee():
     
-     s3 = boto3.resource('s3')
-    # Get Employee
-     emp_id = request.form['emp_id']
-     emp_name = ""
-     emp_loc = ""
-     emp_pri_skill = ""
-     emp_img = ""
+    s3 = boto3.resource('s3')
+#     Get Employee
+    emp_id = request.form['emp_id']
+    emp_name = ""
+    emp_loc = ""
+    emp_pri_skill = ""
+    emp_img = ""
     # SELECT STATEMENT TO GET DATA FROM MYSQL
-     select_stmt = "SELECT * FROM employee WHERE emp_id = %(emp_id)s"
+    select_stmt = "SELECT * FROM employee WHERE emp_id = %(emp_id)s"
 
-     cursor = db_conn.cursor()
-     cursor.execute(selectSQL, (emp_id))
-     result = cursor.fetchall()
+    cursor = db_conn.cursor()
+    cursor.execute(selectSQL, (emp_id))
+    result = cursor.fetchall()
     
-     if(len(result)>0):
+    if(len(result)>0):
         for i in result:
             emp_image_file_name_in_s3 = "emp-id-" + str(emp_id) + "_image_file"
             emp_fname = i[1]
@@ -213,7 +213,7 @@ def Employee():
                 emp_image_file_name_in_s3)
             cursor.close()
             return render_template('emp_det_out.html', emp_id_output=emp_id, fname=emp_fname, lname=emp_lname, emp_loc_output=emp_loc, emp_pri_skill_output=emp_pri_skill, emp_img=object_url)
-      else:
+    else:
         cursor.close()
         return("No User Found")
 
